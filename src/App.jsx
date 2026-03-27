@@ -59,6 +59,39 @@ const education = [
   }
 ];
 
+const projectList = [
+  {
+    title: "Hypertonicity Clinic Visualization Tool",
+    description:
+      "Industry-linked dashboard project built to help clinicians review long-term patient outcomes and treatment effectiveness through a clearer visual workflow.",
+    tags: ["Power BI", "Healthcare UX", "Data Visualization"],
+    codeUrl: "https://github.com/tirthpatel-au/HypertonicityClinicVisualizationTool"
+  },
+  {
+    title: "ZoraChat App",
+    description:
+      "Chat-focused web app with a live demo, built as a polished front-end project with a modern interface.",
+    tags: ["React", "Chat UI", "Frontend"],
+    codeUrl: "https://github.com/tirthpatel-au/zorachat-app",
+    demoUrl: "https://tirthpatel-au.github.io/zorachat-app/"
+  },
+  {
+    title: "Portfolio Website",
+    description:
+      "My personal portfolio site featuring responsive design, subtle animation, and project-focused storytelling.",
+    tags: ["React", "Portfolio", "Responsive UI"],
+    codeUrl: "https://github.com/tirthpatel-au/Portfolio-Website"
+  },
+  {
+    title: "OpenAir Weather",
+    description:
+      "Weather application with a live demo that presents forecasts in a simple and approachable interface.",
+    tags: ["React", "Weather App", "API UI"],
+    codeUrl: "https://github.com/tirthpatel-au/openair-weather",
+    demoUrl: "https://tirthpatel-au.github.io/openair-weather/"
+  }
+];
+
 function LogoMark() {
   return (
     <svg
@@ -193,7 +226,102 @@ function ContactFormIcon() {
   );
 }
 
+function ArrowUpRightIcon() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path
+        d="M7 17 17 7M9.5 7H17v7.5"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.8"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+function ProjectsPage() {
+  return (
+    <div className="app-shell projects-shell">
+      <header className="projects-header">
+        <nav className="topbar">
+          <a className="brand" href="/" aria-label="Tirth Patel home">
+            <LogoMark />
+          </a>
+          <div className="brand-copy">
+            <span className="brand-tag">Portfolio</span>
+            <strong>Tirth Patel</strong>
+          </div>
+          <div className="nav-links">
+            <a href="/">Home</a>
+            <a href="/#about">About</a>
+            <a href="/#experience">Experience</a>
+            <a href="/#contact">Contact</a>
+          </div>
+        </nav>
+
+        <div className="projects-hero reveal-on-scroll reveal-soft is-visible">
+          <p className="kicker">Projects</p>
+          <h1>Selected work with live demos and code references.</h1>
+          <p className="lead">
+            A dedicated page for the projects I want people to explore in more
+            detail. Each card links to the GitHub repository and, when available,
+            a working demo.
+          </p>
+        </div>
+      </header>
+
+      <main className="projects-grid">
+        {projectList.map((project) => (
+          <article key={project.title} className="project-showcase-card reveal-on-scroll reveal-soft is-visible">
+            <div className="project-visual">
+              <div className="project-visual-badge">{project.title}</div>
+            </div>
+            <div className="project-showcase-content">
+              <div className="project-showcase-head">
+                <h2>{project.title}</h2>
+              </div>
+              <p>{project.description}</p>
+              <div className="project-tag-row">
+                {project.tags.map((tag) => (
+                  <span key={tag}>{tag}</span>
+                ))}
+              </div>
+              <div className="project-link-row">
+                <a
+                  className="project-action-link"
+                  href={project.codeUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  <GithubIcon />
+                  <span>Code</span>
+                </a>
+                {project.demoUrl ? (
+                  <a
+                    className="project-action-link project-action-link-demo"
+                    href={project.demoUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    <ArrowUpRightIcon />
+                    <span>Demo</span>
+                  </a>
+                ) : null}
+              </div>
+            </div>
+          </article>
+        ))}
+      </main>
+    </div>
+  );
+}
+
 function App() {
+  const isProjectsPage =
+    typeof window !== "undefined" && window.location.pathname === "/projects";
+
   const [formState, setFormState] = useState({
     name: "",
     phone: "",
@@ -287,6 +415,10 @@ function App() {
     }
   };
 
+  if (isProjectsPage) {
+    return <ProjectsPage />;
+  }
+
   return (
     <div className="app-shell">
       <header className="hero" id="home">
@@ -300,7 +432,7 @@ function App() {
           </div>
           <div className="nav-links">
             <a href="#about">About</a>
-            <a href="#project">Project</a>
+            <a href="/projects">Project</a>
             <a href="#experience">Experience</a>
             <a href="#contact">Contact</a>
           </div>
@@ -329,7 +461,7 @@ function App() {
             </p>
 
             <div className="hero-actions">
-              <a className="primary-button subtle-button" href="#project">
+              <a className="primary-button subtle-button" href="/projects">
                 View Project
               </a>
             </div>
